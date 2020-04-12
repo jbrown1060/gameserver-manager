@@ -38,6 +38,7 @@ fi
 
 ## install process fivem
 
+  mkdir -p $installlocation
   cd $installlocation
   wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh
   mkdir -p $installlocation/fivem
