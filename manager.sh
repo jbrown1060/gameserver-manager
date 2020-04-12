@@ -237,8 +237,8 @@ fi
 
 if [[ $updatemanager == "true" ]]; then
 
-managerurl="https://raw.githubusercontent.com/jbrown1060/fivem-servermanager/master/manager.sh"
-configurl="https://raw.githubusercontent.com/jbrown1060/fivem-servermanager/master/managerfiles/fivem-default-config.cfg"
+managerurl="https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh"
+configurl="https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/fivem-default-config.cfg"
 
 rm ./manager.sh
 wget --no-cache $managerurl
