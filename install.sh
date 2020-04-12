@@ -9,11 +9,11 @@ apt-get install whiptail -y
 
 if (whiptail --title "Update & Upgrade" --yesno "Do you want to update and install required components to your system?" 10 60) then
     	sudo apt-get update && apt-get upgrade
-	sudo apt-get install git xz-utils wget curl screen openjdk-8-jre-headless -y 
+	sudo apt-get install git xz-utils wget curl screen openjdk-11-jre-headless -y 
 else
 	if [[ $1 == "--no-update" ]]; then
 		echo "You're on your own"
-		sudo apt-get install git xz-utils wget curl screen openjdk-8-jre-headless -y
+		sudo apt-get install git xz-utils wget curl screen openjdk-11-jre-headless -y
 	else
 		echo "Sorry, we can't support you then."
 		exit 1
