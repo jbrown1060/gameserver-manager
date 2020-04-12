@@ -197,13 +197,13 @@ fi
 
 if [[ $update == "true" ]]; then
 
-for server in ./servers/*; do
+for server in ./fivem/servers/*; do
 		server="$(echo $server | sed 's,.*/,,')"
 		if screen -list | grep -q "$server"; then
 		    echo "BEFORE YOU CAN UPDATE: SHUTDOWN -> $server"
 		fi
 done
-for server in ./servers/*; do
+for server in ./fivem/servers/*; do
 		server="$(echo $server | sed 's,.*/,,')"
 		if screen -list | grep -q "$server"; then
 		    exit 1
@@ -214,7 +214,7 @@ done
 masterfolder="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
 newestfxdata="$(curl $masterfolder | grep '<a href' | grep -v 'revoked' | head -2 | tail -1 | grep -Po '(?<=href=")[^"]*')"
 # filter valid urls and take last one.
-cd fivem
+cd ./fivem
 rm -R ./fxdata
 mkdir fxdata
 cd fxdata
@@ -238,16 +238,16 @@ fi
 if [[ $updatemanager == "true" ]]; then
 
 managerurl="https://raw.githubusercontent.com/jbrown1060/fivem-servermanager/master/manager.sh"
-configurl="https://raw.githubusercontent.com/jbrown1060/fivem-servermanager/master/managerfiles/default-config.cfg"
+configurl="https://raw.githubusercontent.com/jbrown1060/fivem-servermanager/master/managerfiles/fivem-default-config.cfg"
 
 rm ./manager.sh
 wget --no-cache $managerurl
 chmod +x ./manager.sh
 
-cd ./managerfiles
-rm ./default-config.cfg
+cd ./fivem/managerfiles
+rm ./fivem-default-config.cfg
 wget $configurl
-chmod +x ./default-config.cfg
+chmod +x ./fivem-default-config.cfg
 cd ..
 whiptail --title "SUCCESS" --msgbox "Manager update complete" 10 60
 ./manager.sh
