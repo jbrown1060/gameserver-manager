@@ -40,6 +40,7 @@ fi
 
   mkdir -p $installlocation/fivem
   cd $installlocation/fivem
+  wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh
   mkdir -p $installlocation/fivem/fxdata
 	cd $installlocation/fivem/fxdata
 	masterfolder="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
@@ -50,7 +51,6 @@ fi
 	cd ..
 	mkdir servers
 	mkdir managerfiles
-	wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh
 	cd ./managerfiles
 	wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/fivem-default-config.cfg
 	wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/fivem-used-ports.txt
