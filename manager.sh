@@ -72,7 +72,7 @@ if [[ $add == "true" ]]; then
 			./manager.sh
 		fi
 	    
-	    git clone https://github.com/citizenfx/cfx-server-data.git ./servers/$question
+	    git clone https://github.com/citizenfx/cfx-server-data.git ./fivem/servers/$question
 
 		# creating config file
 		port=30120
