@@ -639,7 +639,7 @@ chmod -R 777 ./*
 whiptail --title "SUCCESS" --msgbox "FX update complete" 10 60
 ./manager.sh
 fi
-
+fi
 
 #
 #
