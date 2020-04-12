@@ -158,7 +158,7 @@ if [[ $delete == "true" ]]; then
 	serverpath="./fivem/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
-		if [ $server == "./servers/*" ]; then
+		if [ $server == "./fivem/servers/*" ]; then
 			whiptail --title "ERROR" --msgbox "There is no server that can be deleted" 10 60
 			./manager.sh
 		else
@@ -178,13 +178,14 @@ if [[ $delete == "true" ]]; then
 		./manager.sh
 	else
 		# read out the port
-		port="$(grep 'endpoint_add_tcp' ./servers/$delserver/config.cfg | sed 's/endpoint_add_tcp //' | tr -d \" | sed 's/.*://')"
-		sed -i "/$port/d" ./managerfiles/used-ports.txt
+		port="$(grep 'endpoint_add_tcp' ./fivem/servers/$delserver/config.cfg | sed 's/endpoint_add_tcp //' | tr -d \" | sed 's/.*://')"
+		sed -i "/$port/d" ./fivem/managerfiles/used-ports.txt
 		cd ./servers
 		rm -f -r ./$delserver
 		cd ..
 
 		whiptail --title "SUCCESS" --msgbox "Your server should be sucessfully deleted." 10 60
+		cd ..
 		./manager.sh
 	fi
 fi
