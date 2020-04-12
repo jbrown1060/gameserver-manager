@@ -435,6 +435,7 @@ if [[ $consolefm == "true" ]]; then
 	fi
 
 fi
+fi
 
 if [[ $minecraft == "true" ]]; then
 
@@ -638,7 +639,6 @@ cd ..
 chmod -R 777 ./*
 whiptail --title "SUCCESS" --msgbox "FX update complete" 10 60
 ./manager.sh
-fi
 fi
 
 #
