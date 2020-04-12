@@ -22,7 +22,7 @@ else
 fi
 
 
-installlocation=$(whiptail --title "Question" --inputbox "Choose a location for everything to install." 10 60 /home/$(whoami)/games/ 3>&1 1>&2 2>&3)
+installlocation=$(whiptail --title "Question" --inputbox "Choose a location for everything to install." 10 60 /home/joshua/games/ 3>&1 1>&2 2>&3)
 exitstatus=$?
 if [ $exitstatus = 0 ]; then
     if [ -d $installlocation ]; then
@@ -41,7 +41,7 @@ fi
   mkdir -p $installlocation/fivem
   cd $installlocation/fivem
   mkdir -p $installlocation/fivem/fxdata
-	cd $installlocation/fxdata
+	cd $installlocation/fivem/fxdata
 	masterfolder="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
 	newestfxdata="$(curl $masterfolder | grep '<a href' | grep -v 'revoked' | head -2 | tail -1 | grep -Po '(?<=href="1)[^"]*')"
 	wget ${masterfolder}${newestfxdata}fx.tar.xz 
