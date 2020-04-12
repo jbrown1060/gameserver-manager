@@ -38,9 +38,10 @@ fi
 
 ## install process fivem
 
+  cd $installlocation
+  wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh
   mkdir -p $installlocation/fivem
   cd $installlocation/fivem
-  wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh
   mkdir -p $installlocation/fivem/fxdata
 	cd $installlocation/fivem/fxdata
 	masterfolder="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
