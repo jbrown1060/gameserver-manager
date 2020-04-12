@@ -57,7 +57,6 @@ cd ../../
 whiptail --title "SUCCESS" --msgbox "Manager update complete" 10 60
 sudo ./manager.sh
 fi
-fi
 
 if [[ $fivem == "true" ]]; then
 
