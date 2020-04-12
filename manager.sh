@@ -24,8 +24,7 @@ OPTION=$(whiptail --title "Joshua's Server Manager" --menu "Choose your option" 
 "1" "Manage existing servers" \
 "2" "Add server" \
 "3" "Delete server" \
-"4" "Update 
-" \
+"4" "Update FiveM Server Data" \
 "5" "Update Manager" 3>&1 1>&2 2>&3)
 
 case "$OPTION" in
@@ -180,12 +179,11 @@ if [[ $delete == "true" ]]; then
 		# read out the port
 		port="$(grep 'endpoint_add_tcp' ./fivem/servers/$delserver/config.cfg | sed 's/endpoint_add_tcp //' | tr -d \" | sed 's/.*://')"
 		sed -i "/$port/d" ./fivem/managerfiles/used-ports.txt
-		cd ./servers
+		cd ./fivem/servers
 		rm -f -r ./$delserver
-		cd ..
+		cd ../../
 
 		whiptail --title "SUCCESS" --msgbox "Your server should be sucessfully deleted." 10 60
-		cd ..
 		./manager.sh
 	fi
 fi
@@ -383,7 +381,7 @@ if [[ $restart == "true" ]]; then
 			screen -S $restart -X at "#" stuff ^C
 			cd ./fivem/servers/$restart
 			screen -dmSL $restart ../../fxdata/run.sh +exec config.cfg
-			cd ../../
+			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server restarted." 10 60
 			./manager.sh
 		else
