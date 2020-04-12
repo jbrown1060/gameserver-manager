@@ -250,7 +250,7 @@ wget $configurl
 chmod +x ./fivem-default-config.cfg
 cd ..
 whiptail --title "SUCCESS" --msgbox "Manager update complete" 10 60
-./manager.sh
+sudo ./manager.sh
 fi
 
 #
