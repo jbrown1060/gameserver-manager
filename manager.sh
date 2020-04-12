@@ -16,12 +16,53 @@ fi
 
 
 
+OPTION=$(whiptail --title "Joshua's Server Manager" --menu "Choose your game" 15 60 5 \
+"1" "FiveM" \
+"2" "Minecraft" \
+"3" "Update GameServer-Manager" 3>&1 1>&2 2>&3)
+case "$OPTION" in
+        1)
+            fivem=true
+            ;;      
+        2)
+            minecraft=true
+            ;;
+        3)
+            updatemanager=true
+            ;;
+        *)
+            exit 1
+esac
+#
+#
+# UPDATE MANAGER
+#
+#
 
 
+if [[ $updatemanager == "true" ]]; then
 
+managerurl="https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh"
+configurl="https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/fivem-default-config.cfg"
+
+rm ./manager.sh
+wget --no-cache $managerurl
+chmod +x ./manager.sh
+
+cd ./fivem/managerfiles
+rm ./fivem-default-config.cfg
+wget $configurl
+chmod +x ./fivem-default-config.cfg
+cd ../../
+whiptail --title "SUCCESS" --msgbox "Manager update complete" 10 60
+sudo ./manager.sh
+fi
+
+
+if [[ $fivem == "true" ]]; then
 
 OPTION=$(whiptail --title "Joshua's Server Manager" --menu "Choose your option" 15 60 5 \
-"1" "Manage existing servers" \
+"1" "Manage existing FiveM servers" \
 "2" "Add FiveM server" \
 "3" "Delete FiveM server" \
 "4" "Update FiveM Server Data" \
@@ -229,32 +270,7 @@ fi
 
 #
 #
-# UPDATE MANAGER
-#
-#
-
-
-if [[ $updatemanager == "true" ]]; then
-
-managerurl="https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/manager.sh"
-configurl="https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/fivem-default-config.cfg"
-
-rm ./manager.sh
-wget --no-cache $managerurl
-chmod +x ./manager.sh
-
-cd ./fivem/managerfiles
-rm ./fivem-default-config.cfg
-wget $configurl
-chmod +x ./fivem-default-config.cfg
-cd ../../
-whiptail --title "SUCCESS" --msgbox "Manager update complete" 10 60
-sudo ./manager.sh
-fi
-
-#
-#
-# MANAGE SERVERS
+# MANAGE FIVEM SERVERS
 #
 #
 
