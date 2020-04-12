@@ -87,7 +87,7 @@ case "$OPTION" in
         *)
             exit 1
 esac
-
+fi
 
 
 #
