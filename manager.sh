@@ -248,8 +248,7 @@ cd ./fivem/managerfiles
 rm ./fivem-default-config.cfg
 wget $configurl
 chmod +x ./fivem-default-config.cfg
-cd ..
-cd ..
+cd ../../
 whiptail --title "SUCCESS" --msgbox "Manager update complete" 10 60
 sudo ./manager.sh
 fi
@@ -310,7 +309,7 @@ if [[ $start == "true" ]]; then
 		if ! screen -list | grep -q "$startserver"; then
 			cd ./fivem/servers/$startserver
 			screen -dmSL $startserver ../../fxdata/run.sh +exec config.cfg
-			cd ../../
+			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server started." 10 60
 			./manager.sh
 		else
