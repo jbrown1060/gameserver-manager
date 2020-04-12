@@ -65,24 +65,20 @@ OPTION=$(whiptail --title "Joshua's Server Manager" --menu "Choose your option" 
 "1" "Manage existing FiveM servers" \
 "2" "Add FiveM server" \
 "3" "Delete FiveM server" \
-"4" "Update FiveM Server Data" \
-"5" "Update GameServer-Manager" 3>&1 1>&2 2>&3)
+"4" "Update FiveM Server Data" 3>&1 1>&2 2>&3)
 
 case "$OPTION" in
         1)
-            manage=true
+            managefm=true
             ;;      
         2)
-            add=true
+            addfm=true
             ;;
         3)
-            delete=true
+            deletefm=true
             ;;
         4)
-            update=true
-            ;;
-        5)
-            updatemanager=true
+            updatefm=true
             ;;
         *)
             exit 1
@@ -96,7 +92,7 @@ fi
 #
 #
 
-if [[ $add == "true" ]]; then
+if [[ $addfm == "true" ]]; then
 
 	question=$(whiptail --title "Internal servername" --inputbox "Choose a new, unique server name. NO SPACES! This wont be the servername shown online." 10 60 3>&1 1>&2 2>&3)
 	exitstatus=$?
@@ -190,7 +186,7 @@ fi
 #
 #
 
-if [[ $delete == "true" ]]; then
+if [[ $deletefm == "true" ]]; then
 
 
 	COUNT=1
@@ -235,7 +231,7 @@ fi
 #
 #
 
-if [[ $update == "true" ]]; then
+if [[ $updatefm == "true" ]]; then
 
 for server in ./fivem/servers/*; do
 		server="$(echo $server | sed 's,.*/,,')"
@@ -274,7 +270,7 @@ fi
 #
 #
 
-if [[ $manage == "true" ]]; then
+if [[ $managefm == "true" ]]; then
 
 
 OPTION=$(whiptail --title "Manage your Server" --menu "Choose an option" 15 60 5 \
@@ -285,22 +281,22 @@ OPTION=$(whiptail --title "Manage your Server" --menu "Choose an option" 15 60 5
 
 case "$OPTION" in
         1)
-            start=true
+            startfm=true
             ;;      
         2)
-            stop=true
+            stopfm=true
             ;;
         3)
-            restart=true
+            restartfm=true
             ;;
         4)
-            console=true
+            consolefm=true
             ;;
         *)
             exit 1
 esac
 
-if [[ $start == "true" ]]; then
+if [[ $startfm == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
@@ -336,7 +332,7 @@ if [[ $start == "true" ]]; then
 fi
 
 
-if [[ $stop == "true" ]]; then
+if [[ $stopfm == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
@@ -371,7 +367,7 @@ if [[ $stop == "true" ]]; then
 fi
 
 
-if [[ $restart == "true" ]]; then
+if [[ $restartfm == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
@@ -408,7 +404,7 @@ if [[ $restart == "true" ]]; then
 fi
 
 
-if [[ $console == "true" ]]; then
+if [[ $consolefm == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
