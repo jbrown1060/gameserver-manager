@@ -22,10 +22,10 @@ fi
 
 OPTION=$(whiptail --title "Joshua's Server Manager" --menu "Choose your option" 15 60 5 \
 "1" "Manage existing servers" \
-"2" "Add server" \
-"3" "Delete server" \
+"2" "Add FiveM server" \
+"3" "Delete FiveM server" \
 "4" "Update FiveM Server Data" \
-"5" "Update Manager" 3>&1 1>&2 2>&3)
+"5" "Update GameServer-Manager" 3>&1 1>&2 2>&3)
 
 case "$OPTION" in
         1)
