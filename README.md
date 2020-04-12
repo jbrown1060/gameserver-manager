@@ -1,5 +1,5 @@
-# gameserver-manager
-Game server manager to manage various games
+# GameServer-Manager
+Game server manager to manage various games based on fivem-servermanager
 Currently Supports:
 * FiveM
 * Minecraft
