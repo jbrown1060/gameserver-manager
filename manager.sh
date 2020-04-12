@@ -128,7 +128,7 @@ if [[ $add == "true" ]]; then
 		fi
 		
 		
-		cat ./fivem/managerfiles/default-config.cfg | \
+		cat ./fivem/managerfiles/fivem-default-config.cfg | \
 		sed "s/VAR_PORT/$port/" | \
 		sed "s/VAR_RCON_PASSWORD/$rcon/" | \
 		sed "s/VAR_LICENSE_KEY/$license/" | \
