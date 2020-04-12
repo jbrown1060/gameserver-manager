@@ -24,7 +24,8 @@ OPTION=$(whiptail --title "Joshua's Server Manager" --menu "Choose your option" 
 "1" "Manage existing servers" \
 "2" "Add server" \
 "3" "Delete server" \
-"4" "Update FXdata" \
+"4" "Update 
+" \
 "5" "Update Manager" 3>&1 1>&2 2>&3)
 
 case "$OPTION" in
@@ -61,7 +62,7 @@ if [[ $add == "true" ]]; then
 	exitstatus=$?
 	if [ $exitstatus = 0 ]; then
 	
-	    if [ -d "./servers/$question" ]; then
+	    if [ -d "./fivem/servers/$question" ]; then
 	    	whiptail --title "ERROR" --msgbox "That name is already in use." 10 60
 		./manager.sh
 	    fi
@@ -75,7 +76,7 @@ if [[ $add == "true" ]]; then
 
 		# creating config file
 		port=30120
-		while grep "$port" ./managerfiles/used-ports.txt
+		while grep "$port" ./fivem/managerfiles/used-ports.txt
 	    do
 	    	port=$(($port+10))
 	    done
@@ -117,7 +118,7 @@ if [[ $add == "true" ]]; then
 			exit 1
 		fi
 		
-    steamkey=$(whiptail --title "Enter your license key" --inputbox "You need a steam api key for the server. Get it from steamcommunity.com/dev/apikey" 10 60 3>&1 1>&2 2>&3)
+    steamkey=$(whiptail --title "Enter your steam key" --inputbox "You need a steam api key for the server. Get it from steamcommunity.com/dev/apikey" 10 60 3>&1 1>&2 2>&3)
 		exitstatus=$?
 		if [ $exitstatus = 0 ]; then
 			steamkey=$steamkey
@@ -127,14 +128,14 @@ if [[ $add == "true" ]]; then
 		fi
 		
 		
-		cat ./managerfiles/default-config.cfg | \
+		cat ./fivem/managerfiles/default-config.cfg | \
 		sed "s/VAR_PORT/$port/" | \
 		sed "s/VAR_RCON_PASSWORD/$rcon/" | \
 		sed "s/VAR_LICENSE_KEY/$license/" | \
 		sed "s/VAR_STEAM_KEY/$steamkey/" | \
-		sed "s/VAR_HOSTNAME/$servername/">>./servers/$question/config.cfg
+		sed "s/VAR_HOSTNAME/$servername/">>./fivem/servers/$question/config.cfg
 		
-	    echo "$port">>./managerfiles/used-ports.txt
+	    echo "$port">>./fivem/managerfiles/used-ports.txt
 	    whiptail --title "SUCCESS" --msgbox "Your server should be sucessfully installed." 10 60
 	    ./manager.sh
 	else
@@ -154,7 +155,7 @@ if [[ $delete == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./servers"
+	serverpath="./fivem/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		if [ $server == "./servers/*" ]; then
@@ -213,7 +214,7 @@ done
 masterfolder="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
 newestfxdata="$(curl $masterfolder | grep '<a href' | grep -v 'revoked' | head -2 | tail -1 | grep -Po '(?<=href=")[^"]*')"
 # filter valid urls and take last one.
-
+cd fivem
 rm -R ./fxdata
 mkdir fxdata
 cd fxdata
@@ -288,7 +289,7 @@ if [[ $start == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./servers"
+	serverpath="./fivem/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
@@ -306,7 +307,7 @@ if [[ $start == "true" ]]; then
 		./manager.sh
 	else
 		if ! screen -list | grep -q "$startserver"; then
-			cd ./servers/$startserver
+			cd ./fivem/servers/$startserver
 			screen -dmSL $startserver ../../fxdata/run.sh +exec config.cfg
 			cd ../../
 			whiptail --title "SUCCESS" --msgbox "Server started." 10 60
@@ -324,7 +325,7 @@ if [[ $stop == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./servers"
+	serverpath="./fivem/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
@@ -359,7 +360,7 @@ if [[ $restart == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./servers"
+	serverpath="./fivem/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
@@ -379,7 +380,7 @@ if [[ $restart == "true" ]]; then
 	else
 		if screen -list | grep -q "$restart"; then
 			screen -S $restart -X at "#" stuff ^C
-			cd ./servers/$restart
+			cd ./fivem/servers/$restart
 			screen -dmSL $restart ../../fxdata/run.sh +exec config.cfg
 			cd ../../
 			whiptail --title "SUCCESS" --msgbox "Server restarted." 10 60
@@ -396,7 +397,7 @@ if [[ $console == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./servers"
+	serverpath="./fivem/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
