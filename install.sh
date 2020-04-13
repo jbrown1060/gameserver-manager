@@ -61,6 +61,7 @@ fi
 	
 ## install process minecraft
   mkdir -p $installlocation/minecraft
+  mkdir -p $installlocation/minecraft/servers
   mkdir -p $installlocation/minecraft/serverfiles
   cd $installlocation/minecraft/serverfiles
   wget https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O latestspigot.jar
