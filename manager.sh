@@ -679,7 +679,7 @@ if [[ $startmine == "true" ]]; then
 	else
 		if ! screen -list | grep -q "$startserver"; then
 			cd ./minecraft/servers/$startserver
-			./minecraft-run.sh
+			screen -dmSL $startserver ./minecraft-run.sh
 			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server started." 10 60
 			./manager.sh
