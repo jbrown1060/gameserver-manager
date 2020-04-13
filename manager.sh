@@ -487,7 +487,7 @@ if [[ $addmine == "true" ]]; then
 		fi
 	    mkdir ./minecraft/servers/$question
 	    wget https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./minecraft/servers/$question/spigotlatest.jar
-	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraftrun.sh -O ./minecraft/servers/$question/minecraft-run.sh
+	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh -O ./minecraft/servers/$question/minecraft-run.sh
 		# creating config file
 		port=25565
 		while grep "$port" ./minecraft/managerfiles/used-ports.txt
