@@ -466,7 +466,7 @@ fi
 
 #
 #
-# ADD A FIVEM SERVER
+# ADD A MINECRAFT SERVER
 #
 #
 
@@ -486,11 +486,11 @@ if [[ $addmine == "true" ]]; then
 			./manager.sh
 		fi
 	    
-	    git clone https://github.com/citizenfx/cfx-server-data.git ./fivem/servers/$question
-
+	    wget https://joshuabrown.us/spigotlatest.jar ./minecraft/servers/$question
+	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh ./minecraft/servers/$question
 		# creating config file
-		port=30120
-		while grep "$port" ./fivem/managerfiles/used-ports.txt
+		port=25565
+		while grep "$port" ./minecraft/managerfiles/used-ports.txt
 	    do
 	    	port=$(($port+10))
 	    done
@@ -505,51 +505,16 @@ if [[ $addmine == "true" ]]; then
 			exit 1
 		fi
 		
-		servername=$(whiptail --title "Choose Gameserver Name" --inputbox "Choose a servername. Your server will be listed in the serverbrowser with that." 10 60 3>&1 1>&2 2>&3)
-		exitstatus=$?
-		if [ $exitstatus = 0 ]; then
-			servername=$servername
-		else
-			echo "You chose Cancel."
-			exit 1
-		fi
-		
-		rcon=$(whiptail --title "Choose RCON password" --inputbox "This password is random." 10 60 $(cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 10 | head -n 1) 3>&1 1>&2 2>&3)
-		exitstatus=$?
-		if [ $exitstatus = 0 ]; then
-			rcon=$rcon
-		else
-			echo "You chose Cancel."
-			exit 1
-		fi
-		
-		license=$(whiptail --title "Enter your license key" --inputbox "You need a license to run the server. Get it from keymaster.fivem.net" 10 60 3>&1 1>&2 2>&3)
-		exitstatus=$?
-		if [ $exitstatus = 0 ]; then
-			license=$license
-		else
-			echo "You chose Cancel."
-			exit 1
-		fi
-		
-    steamkey=$(whiptail --title "Enter your steam key" --inputbox "You need a steam api key for the server. Get it from steamcommunity.com/dev/apikey" 10 60 3>&1 1>&2 2>&3)
-		exitstatus=$?
-		if [ $exitstatus = 0 ]; then
-			steamkey=$steamkey
-		else
-			echo "You chose Cancel."
-			exit 1
-		fi
 		
 		
-		cat ./fivem/managerfiles/fivem-default-config.cfg | \
+		cat ./minecraft/managerfiles/fivem-default-config.cfg | \
 		sed "s/VAR_PORT/$port/" | \
 		sed "s/VAR_RCON_PASSWORD/$rcon/" | \
 		sed "s/VAR_LICENSE_KEY/$license/" | \
 		sed "s/VAR_STEAM_KEY/$steamkey/" | \
-		sed "s/VAR_HOSTNAME/$servername/">>./fivem/servers/$question/config.cfg
+		sed "s/VAR_HOSTNAME/$servername/">>./minecraft/servers/$question/config.cfg
 		
-	    echo "$port">>./fivem/managerfiles/used-ports.txt
+	    echo "$port">>./minecraft/managerfiles/used-ports.txt
 	    whiptail --title "SUCCESS" --msgbox "Your server should be sucessfully installed." 10 60
 	    ./manager.sh
 	else
@@ -569,10 +534,10 @@ if [[ $deletemine == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./fivem/servers"
+	serverpath="./minecraft/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
-		if [ $server == "./fivem/servers/*" ]; then
+		if [ $server == "./minecraft/servers/*" ]; then
 			whiptail --title "ERROR" --msgbox "There is no server that can be deleted" 10 60
 			./manager.sh
 		else
@@ -592,9 +557,9 @@ if [[ $deletemine == "true" ]]; then
 		./manager.sh
 	else
 		# read out the port
-		port="$(grep 'endpoint_add_tcp' ./fivem/servers/$delserver/config.cfg | sed 's/endpoint_add_tcp //' | tr -d \" | sed 's/.*://')"
-		sed -i "/$port/d" ./fivem/managerfiles/used-ports.txt
-		cd ./fivem/servers
+		port="$(grep 'endpoint_add_tcp' ./minecraft/servers/$delserver/config.cfg | sed 's/endpoint_add_tcp //' | tr -d \" | sed 's/.*://')"
+		sed -i "/$port/d" ./minecraft/managerfiles/used-ports.txt
+		cd ./minecraft/servers
 		rm -f -r ./$delserver
 		cd ../../
 
@@ -605,45 +570,62 @@ fi
 
 #
 #
-# UPDATE FXDATA
+# UPDATE Minecraft
 #
 #
 
 if [[ $updatemine == "true" ]]; then
 
-for server in ./fivem/servers/*; do
+for server in ./minecraft/servers/*; do
 		server="$(echo $server | sed 's,.*/,,')"
 		if screen -list | grep -q "$server"; then
 		    echo "BEFORE YOU CAN UPDATE: SHUTDOWN -> $server"
 		fi
 done
-for server in ./fivem/servers/*; do
+for server in ./minecraft/servers/*; do
 		server="$(echo $server | sed 's,.*/,,')"
 		if screen -list | grep -q "$server"; then
 		    exit 1
 		fi
 done
+COUNT=1
+	AUX=0;
+	serverpath="./minecraft/servers"
+	for server in $serverpath/*; do
+	    if ! [ -d $server ]; then
+		echo "$server is not a directory, what the hell is it doing here?"
+		rm -v -f $server
+	    else
+		server=${server:${#serverpath}}
+		STR[AUX]="${server:1} <-"
+		COUNT+=1
+		AUX+=1
+	    fi
+	done
+	startserver=$(whiptail --title "Choose a server" --menu "Choose a server" 15 60 6 ${STR[@]} 3>&1 1>&2 2>&3)
+	exitstatus=$?
+	if ! [ $exitstatus = 0 ]; then
+		./manager.sh
+	else
+		if ! screen -list | grep -q "$startserver"; then
+			cd ./minecraft/servers/$startserver
+			rm spigotlatest.jar
+			spigot="https://joshuabrown.us/spigotlatest.jar"
+			wget ${spigot}
+			cd ../../../
+			whiptail --title "SUCCESS" --msgbox "Server updated. Please start." 10 60
+			./manager.sh
+		else
+			whiptail --title "ERROR" --msgbox "This server is running." 10 60
+			./manager.sh
+		fi
+	fi
 
-
-masterfolder="https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/"
-newestfxdata="$(curl $masterfolder | grep '<a href' | grep -v 'revoked' | head -2 | tail -1 | grep -Po '(?<=href=")[^"]*')"
-# filter valid urls and take last one.
-cd ./fivem
-rm -R ./fxdata
-mkdir fxdata
-cd fxdata
-wget ${masterfolder}${newestfxdata} 
-tar xf fx.tar.xz
-rm ./fx.tar.xz
-cd ..
-chmod -R 777 ./*
-whiptail --title "SUCCESS" --msgbox "FX update complete" 10 60
-./manager.sh
 fi
 
 #
 #
-# MANAGE FIVEM SERVERS
+# MANAGE MINECRAFT SERVERS
 #
 #
 
@@ -677,7 +659,7 @@ if [[ $startmine == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./fivem/servers"
+	serverpath="./minecraft/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
@@ -695,8 +677,8 @@ if [[ $startmine == "true" ]]; then
 		./manager.sh
 	else
 		if ! screen -list | grep -q "$startserver"; then
-			cd ./fivem/servers/$startserver
-			screen -dmSL $startserver ../../fxdata/run.sh +exec config.cfg
+			cd ./minecraft/servers/$startserver
+			./minecraft-run.sh
 			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server started." 10 60
 			./manager.sh
@@ -713,7 +695,7 @@ if [[ $stopmine == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./fivem/servers"
+	serverpath="./minecraft/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
@@ -748,7 +730,7 @@ if [[ $restartmine == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./fivem/servers"
+	serverpath="./minecraft/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
@@ -768,8 +750,8 @@ if [[ $restartmine == "true" ]]; then
 	else
 		if screen -list | grep -q "$restart"; then
 			screen -S $restart -X at "#" stuff ^C
-			cd ./fivem/servers/$restart
-			screen -dmSL $restart ../../fxdata/run.sh +exec config.cfg
+			cd ./minecraft/servers/$restart
+			./minecraft-run.sh
 			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server restarted." 10 60
 			./manager.sh
@@ -785,7 +767,7 @@ if [[ $consolemine == "true" ]]; then
 
 	COUNT=1
 	AUX=0;
-	serverpath="./fivem/servers"
+	serverpath="./minecraft/servers"
 	for server in $serverpath/*; do
 	    if ! [ -d $server ]; then
 		echo "$server is not a directory, what the hell is it doing here?"
