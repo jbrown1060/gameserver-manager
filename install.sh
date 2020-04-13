@@ -62,11 +62,6 @@ fi
 ## install process minecraft
   mkdir -p $installlocation/minecraft
   mkdir -p $installlocation/minecraft/servers
-  mkdir -p $installlocation/minecraft/serverfiles
-  cd $installlocation/minecraft/serverfiles
-  wget https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O latestspigot.jar
-  wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/runminecraft.sh
-  chmod +x $installlocation/minecraft/serverfiles/runminecraft.sh
   
 clear
 echo "Installation process is over."
