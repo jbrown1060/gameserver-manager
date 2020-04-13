@@ -485,9 +485,9 @@ if [[ $addmine == "true" ]]; then
 	    	whiptail --title "ERROR" --msgbox "Please dont use spaces." 10 60
 			./manager.sh
 		fi
-	    
-	    wget https://joshuabrown.us/spigotlatest.jar ./minecraft/servers/$question
-	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh ./minecraft/servers/$question
+	    mkdir ./minecraft/servers/$question
+	    wget https://joshuabrown.us/spigotlatest.jar -O ./minecraft/servers/$question/
+	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh -O ./minecraft/servers/$question/
 		# creating config file
 		port=25565
 		while grep "$port" ./minecraft/managerfiles/used-ports.txt
