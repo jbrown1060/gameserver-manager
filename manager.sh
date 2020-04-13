@@ -487,7 +487,7 @@ if [[ $addmine == "true" ]]; then
 		fi
 	    mkdir ./minecraft/servers/$question
 		echo "elua=true" >>elua.txt
-	    wget https://joshuabrown.us/spigotlatest.jar -O ./minecraft/servers/$question/spigotlatest.jar
+	    wget https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./minecraft/servers/$question/spigotlatest.jar
 	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh -O ./minecraft/servers/$question/minecraft-run.sh
 		chmod +x minecraft-run.sh
 		# creating config file
@@ -612,8 +612,8 @@ COUNT=1
 		if ! screen -list | grep -q "$startserver"; then
 			cd ./minecraft/servers/$startserver
 			rm spigotlatest.jar
-			spigot="https://joshuabrown.us/spigotlatest.jar"
-			wget ${spigot}
+			spigot="https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar"
+			wget ${spigot} -O spigotlatest.jar
 			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server updated. Please start." 10 60
 			./manager.sh
