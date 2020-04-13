@@ -486,7 +486,7 @@ if [[ $addmine == "true" ]]; then
 			./manager.sh
 		fi
 	    mkdir ./minecraft/servers/$question
-		echo "elua=true" >>elua.txt
+		echo "elua=true" | tee eula.txt
 	    wget https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./minecraft/servers/$question/spigotlatest.jar
 	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh -O ./minecraft/servers/$question/minecraft-run.sh
 		chmod +x ./minecraft/servers/$question/minecraft-run.sh
