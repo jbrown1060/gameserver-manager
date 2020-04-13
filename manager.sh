@@ -681,8 +681,11 @@ if [[ $startmine == "true" ]]; then
 		if ! screen -list | grep -q "$startserver"; then
 			cd ./minecraft/servers/$startserver
 			screen -dmSL $startserver ./minecraft-run.sh
+			rm eula.txt
+			echo "elua=true" >>elua.txt
 			cd ../../../
 			whiptail --title "SUCCESS" --msgbox "Server started." 10 60
+			
 			./manager.sh
 		else
 			whiptail --title "ERROR" --msgbox "This server is already running." 10 60
