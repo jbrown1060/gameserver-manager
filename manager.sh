@@ -486,7 +486,7 @@ if [[ $addmine == "true" ]]; then
 			./manager.sh
 		fi
 	    mkdir ./minecraft/servers/$question
-	    wget https://cdn.getbukkit.org/spigot/spigot-1.15.2.jar -O ./minecraft/servers/$question/spigotlatest.jar
+	    wget https://joshuabrown.us/spigotlatest.jar -O ./minecraft/servers/$question/spigotlatest.jar
 	    wget https://raw.githubusercontent.com/jbrown1060/gameserver-manager/master/managerfiles/minecraft-run.sh -O ./minecraft/servers/$question/minecraft-run.sh
 		# creating config file
 		port=25565
@@ -640,16 +640,16 @@ OPTION=$(whiptail --title "Manage your Server" --menu "Choose an option" 15 60 5
 
 case "$OPTION" in
         1)
-            startfm=true
+            startmine=true
             ;;      
         2)
-            stopfm=true
+            stopmine=true
             ;;
         3)
-            restartfm=true
+            restartmine=true
             ;;
         4)
-            consolefm=true
+            consolemine=true
             ;;
         *)
             exit 1
